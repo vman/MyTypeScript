@@ -40,9 +40,9 @@ gulp.task('minify-js', ['concat-js'], function () {
 gulp.task('upload-to-sp', ['minify-js'], function () {
     return gulp.src("./Output/*.js")
       .pipe(spsave({
-          username: "ccdev2@murphyccdev.onmicrosoft.com",
-          password: "Surf1ng_",
-          siteUrl: "https://murphyccdev.sharepoint.com/sites/pub/",
+          username: "ccdev2@tenant.onmicrosoft.com",
+          password: "tenant",
+          siteUrl: "https://tenant.sharepoint.com/sites/pub/",
           folder: "Style Library/My Folder",
           checkin: true,
           checkinType: 1
