@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\ts\mywebpart.ts" />
+    <TypeScriptCompile Include="Scripts\ts\User.ts" />
     <TypeScriptCompile Include="Scripts\typings\globals\jquery\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\globals\microsoft.ajax\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\globals\sharepoint\index.d.ts" />

@@ -1,17 +1,7 @@
+"use strict";
 /// <reference path="../Typings/index.d.ts" />
-var User = (function () {
-    function User() {
-        this.getUserDetails();
-        this.deferred = $.Deferred();
-    }
-    User.prototype.getUserDetails = function () {
-        $.getJSON(_spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties", function (data) {
-            console.log(data);
-        });
-    };
-    return User;
-}());
+var User_1 = require("./User");
 $(document).ready(function () {
-    var user = new User();
+    var user = new User_1.default();
     alert(user.AccountName);
 });

@@ -9,11 +9,26 @@ var spsave = require('gulp-spsave'); //upload to SharePoint
 var tslint = require('gulp-tslint');
 var tsc = require('gulp-typescript');
 var tsProject = tsc.createProject('tsconfig.json');
+var browserify = require('browserify');
+var transform = require('vinyl-transform');;
 
-gulp.task('concat-js', ['compile-ts'] ,function () {
-    return gulp.src(["./Scripts/libs/*.js", "./Scripts/js/*.js"])
-    .pipe(concat("app.js"))
-    .pipe(gulp.dest("./Output"));
+//gulp.task('concat-js', ['compile-ts'], function () {
+//    return gulp.src(["./Scripts/libs/*.js", "./Scripts/js/*.js"])
+//    .pipe(concat("app.js"))
+//    .pipe(gulp.dest("./Output"));
+//});
+
+gulp.task('browserify', function () {
+
+    var browserified = transform(function (filename) {
+        var b = browserify({ entries: filename, debug: true });
+        return b.bundle();
+    });
+
+    return gulp.src(['./Scripts/js/*.js'])
+      .pipe(browserified)
+      .pipe(uglify())
+      .pipe(gulp.dest('./Output'));
 });
 
 gulp.task('lint-ts', function () {
