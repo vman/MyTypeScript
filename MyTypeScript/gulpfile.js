@@ -2,50 +2,33 @@
 var gulp = require('gulp');
 
 //Load gulp plugins
-var concat = require('gulp-concat'); //bundle
 var uglify = require('gulp-uglify'); //minify
 var rename = require('gulp-rename'); //renaming to min
 var spsave = require('gulp-spsave'); //upload to SharePoint
 var tslint = require('gulp-tslint');
-var tsc = require('gulp-typescript');
-var tsProject = tsc.createProject('tsconfig.json');
-var browserify = require('browserify');
-var transform = require('vinyl-transform');;
+var browserify = require("browserify");
+var source = require('vinyl-source-stream');
+var tsify = require("tsify");
 
-//gulp.task('concat-js', ['compile-ts'], function () {
-//    return gulp.src(["./Scripts/libs/*.js", "./Scripts/js/*.js"])
-//    .pipe(concat("app.js"))
-//    .pipe(gulp.dest("./Output"));
-//});
-
-gulp.task('browserify', function () {
-
-    var browserified = transform(function (filename) {
-        var b = browserify({ entries: filename, debug: true });
-        return b.bundle();
-    });
-
-    return gulp.src(['./Scripts/js/*.js'])
-      .pipe(browserified)
-      .pipe(uglify())
-      .pipe(gulp.dest('./Output'));
+gulp.task('browserify', ['lint-ts'], function () {
+    return browserify({
+        entries: ['./scripts/ts/app.ts']
+    })
+    .plugin(tsify)
+    .bundle()
+    .pipe(source('app.js'))
+    .pipe(gulp.dest('./Output/'));
 });
 
 gulp.task('lint-ts', function () {
-    return gulp.src(['./Scripts/**/*.ts', '!./Scripts/**/*.d.ts'])
+    return gulp.src('./Scripts/ts/*.ts')
     .pipe(tslint({
         formatter: "verbose"
     }))
     .pipe(tslint.report());
 });
 
-gulp.task('compile-ts', ['lint-ts'], function () {
-    return gulp.src("./Scripts/ts/*.ts")
-    .pipe(tsc(tsProject))
-    .pipe(gulp.dest("./Scripts/js"));
-});
-
-gulp.task('minify-js', ['concat-js'], function () {
+gulp.task('minify-js', ['browserify'], function () {
     return gulp.src("./Output/app.js")
     .pipe(uglify())
     .pipe(rename({ suffix: '.min' }))

@@ -27,12 +27,10 @@
     <Content Include="index.html" />
     <Content Include="Output\app.js" />
     <Content Include="Output\app.min.js" />
-    <Content Include="Scripts\libs\jquery.js" />
-    <Content Include="Scripts\js\mywebpart.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\ts\mywebpart.ts" />
+    <TypeScriptCompile Include="Scripts\ts\app.ts" />
     <TypeScriptCompile Include="Scripts\ts\User.ts" />
     <TypeScriptCompile Include="Scripts\typings\globals\jquery\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\globals\microsoft.ajax\index.d.ts" />
