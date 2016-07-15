@@ -2,24 +2,30 @@
 "use strict";
 var $ = require("jquery");
 var User = (function () {
-    function User() {
+    function User(username) {
+        this._userName = username;
     }
     User.prototype.getUserDetails = function () {
         var _this = this;
         var deferred = $.Deferred();
         var ajaxSettings = {
-            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=AccountName,DisplayName,Email",
-            headers: { "Accept": "application/json;odata=nometadata", "X-RequestDigest": $("#__REQUESTDIGEST").val() },
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='" + encodeURIComponent(this._userName) + "'&select=AccountName,DisplayName,Email",
+            headers: { "Accept": "application/json;odata=nometadata" },
             error: function (xhr, status, error) { deferred.reject(error); },
             success: function (data) {
                 _this.AccountName = data.AccountName;
                 _this.DisplayName = data.DisplayName;
                 _this.Email = data.Email;
-                deferred.resolve(data);
+                deferred.resolve();
             }
         };
         $.ajax(ajaxSettings);
         return deferred.promise();
+    };
+    User.prototype.displayUserDetails = function () {
+        console.log(this.AccountName);
+        console.log(this.DisplayName);
+        console.log(this.Email);
     };
     return User;
 }());
@@ -10107,9 +10113,9 @@ return jQuery;
 var $ = require("jquery");
 var User_1 = require("./User");
 $(document).ready(function () {
-    var user = new User_1.default();
-    user.getUserDetails().done(function () {
-        console.log(user.AccountName);
+    var user = new User_1.default("i:0#.f|membership|ccdev2@murphyccdev.onmicrosoft.com");
+    user.getUserDetails().then(function () {
+        user.displayUserDetails();
     });
 });
 

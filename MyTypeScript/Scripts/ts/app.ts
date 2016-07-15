@@ -1,13 +1,14 @@
 ﻿import * as $ from "jquery";
 import User from "./User";
 
-$(document).ready(function () {
+$(document).ready(() => {
 
-    let user = new User();
+    let user = new User("i:0#.f|membership|ccdev2@murphyccdev.onmicrosoft.com");
 
-    user.getUserDetails().done(function () {
-        console.log(user.AccountName);
-        console.log(user.DisplayName);
-        console.log(user.Email);
+    user.getUserDetails().then(() => {
+
+        user.displayUserDetails();
+
     });
+
 });

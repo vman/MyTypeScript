@@ -5,8 +5,10 @@ export default class User {
     public DisplayName: string;
     public Email: string;
 
-    constructor() {
+    private _userName: string;
 
+    constructor(username: string) {
+        this._userName = username;
     }
 
     public getUserDetails() {
@@ -14,21 +16,29 @@ export default class User {
         let deferred = $.Deferred();
 
         let ajaxSettings: JQueryAjaxSettings = {
-            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=AccountName,DisplayName,Email",
-            headers: { "Accept": "application/json;odata=nometadata", "X-RequestDigest": $("#__REQUESTDIGEST").val() },
-            error: function (xhr, status, error) { deferred.reject(error); },
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='" + encodeURIComponent(this._userName) + "'&select=AccountName,DisplayName,Email",
+            headers: { "Accept": "application/json;odata=nometadata" },
+            error: (xhr, status, error) => { deferred.reject(error); },
             success: (data) => {
 
                 this.AccountName = data.AccountName;
                 this.DisplayName = data.DisplayName;
                 this.Email = data.Email;
 
-                deferred.resolve(data);
+                deferred.resolve();
             }
         };
 
         $.ajax(ajaxSettings);
 
         return deferred.promise();
+    }
+
+    public displayUserDetails() {
+
+        console.log(this.AccountName);
+        console.log(this.DisplayName);
+        console.log(this.Email);
+
     }
 }
