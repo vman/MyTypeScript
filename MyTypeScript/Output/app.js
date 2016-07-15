@@ -5,16 +5,16 @@ var User = (function () {
     function User() {
     }
     User.prototype.getUserDetails = function () {
+        var _this = this;
         var deferred = $.Deferred();
-        var self = this;
         var ajaxSettings = {
             url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=AccountName,DisplayName,Email",
             headers: { "Accept": "application/json;odata=nometadata", "X-RequestDigest": $("#__REQUESTDIGEST").val() },
             error: function (xhr, status, error) { deferred.reject(error); },
             success: function (data) {
-                self.AccountName = data.AccountName;
-                self.DisplayName = data.DisplayName;
-                self.Email = data.Email;
+                _this.AccountName = data.AccountName;
+                _this.DisplayName = data.DisplayName;
+                _this.Email = data.Email;
                 deferred.resolve(data);
             }
         };

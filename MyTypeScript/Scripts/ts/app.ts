@@ -7,5 +7,7 @@ $(document).ready(function () {
 
     user.getUserDetails().done(function () {
         console.log(user.AccountName);
+        console.log(user.DisplayName);
+        console.log(user.Email);
     });
 });
