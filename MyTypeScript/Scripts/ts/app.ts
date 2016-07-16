@@ -3,11 +3,14 @@ import User from "./User";
 
 $(document).ready(() => {
 
-    let user = new User("i:0#.f|membership|ccdev2@murphyccdev.onmicrosoft.com");
+    // Create an object of the User class
+    let user = new User();
 
-    user.getUserDetails().then(() => {
+    // Get user details
+    user.getDetails().then(() => {
 
-        user.displayUserDetails();
+        // Display user details
+        user.displayDetails();
 
     });
 

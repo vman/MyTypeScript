@@ -2,17 +2,18 @@
 "use strict";
 var $ = require("jquery");
 var User = (function () {
-    function User(username) {
-        this._userName = username;
+    function User() {
     }
-    User.prototype.getUserDetails = function () {
+    User.prototype.getDetails = function () {
         var _this = this;
         var deferred = $.Deferred();
         var ajaxSettings = {
-            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='" + encodeURIComponent(this._userName) + "'&select=AccountName,DisplayName,Email",
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=AccountName,DisplayName,Email",
             headers: { "Accept": "application/json;odata=nometadata" },
             error: function (xhr, status, error) { deferred.reject(error); },
             success: function (data) {
+                /* Since we have used the => lambda syntax to create this function,
+                the 'this' variable refers to the current instance of the User class even in the context of the success handler */
                 _this.AccountName = data.AccountName;
                 _this.DisplayName = data.DisplayName;
                 _this.Email = data.Email;
@@ -22,7 +23,7 @@ var User = (function () {
         $.ajax(ajaxSettings);
         return deferred.promise();
     };
-    User.prototype.displayUserDetails = function () {
+    User.prototype.displayDetails = function () {
         console.log(this.AccountName);
         console.log(this.DisplayName);
         console.log(this.Email);
@@ -10113,9 +10114,12 @@ return jQuery;
 var $ = require("jquery");
 var User_1 = require("./User");
 $(document).ready(function () {
-    var user = new User_1.default("i:0#.f|membership|ccdev2@murphyccdev.onmicrosoft.com");
-    user.getUserDetails().then(function () {
-        user.displayUserDetails();
+    // Create an object of the User class
+    var user = new User_1.default();
+    // Get user details
+    user.getDetails().then(function () {
+        // Display user details
+        user.displayDetails();
     });
 });
 

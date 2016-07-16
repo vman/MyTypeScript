@@ -1,26 +1,22 @@
 ﻿import * as $ from "jquery";
 
 export default class User {
-    public AccountName: string;
-    public DisplayName: string;
-    public Email: string;
+    AccountName: string;
+    DisplayName: string;
+    Email: string;
 
-    private _userName: string;
-
-    constructor(username: string) {
-        this._userName = username;
-    }
-
-    public getUserDetails() {
+    getDetails() {
 
         let deferred = $.Deferred();
 
         let ajaxSettings: JQueryAjaxSettings = {
-            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='" + encodeURIComponent(this._userName) + "'&select=AccountName,DisplayName,Email",
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/SP.UserProfiles.PeopleManager/GetMyProperties?$select=AccountName,DisplayName,Email",
             headers: { "Accept": "application/json;odata=nometadata" },
             error: (xhr, status, error) => { deferred.reject(error); },
             success: (data) => {
 
+                /* Since we have used the => lambda syntax to create this function,
+                the 'this' variable refers to the current instance of the User class even in the context of the success handler */
                 this.AccountName = data.AccountName;
                 this.DisplayName = data.DisplayName;
                 this.Email = data.Email;
@@ -34,7 +30,7 @@ export default class User {
         return deferred.promise();
     }
 
-    public displayUserDetails() {
+    displayDetails() {
 
         console.log(this.AccountName);
         console.log(this.DisplayName);

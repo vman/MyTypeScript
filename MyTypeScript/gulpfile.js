@@ -10,6 +10,14 @@ var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var tsify = require("tsify");
 
+gulp.task('lint-ts', function () {
+    return gulp.src('./Scripts/ts/*.ts')
+    .pipe(tslint({
+        formatter: "verbose"
+    }))
+    .pipe(tslint.report());
+});
+
 gulp.task('browserify', ['lint-ts'], function () {
     return browserify({
         entries: ['./scripts/ts/app.ts']
@@ -18,14 +26,6 @@ gulp.task('browserify', ['lint-ts'], function () {
     .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('./Output/'));
-});
-
-gulp.task('lint-ts', function () {
-    return gulp.src('./Scripts/ts/*.ts')
-    .pipe(tslint({
-        formatter: "verbose"
-    }))
-    .pipe(tslint.report());
 });
 
 gulp.task('minify-js', ['browserify'], function () {
@@ -38,8 +38,8 @@ gulp.task('minify-js', ['browserify'], function () {
 gulp.task('upload-to-sp', ['minify-js'], function () {
     return gulp.src("./Output/*.js")
       .pipe(spsave({
-          username: "ccdev2@tenant.onmicrosoft.com",
-          password: "tenant",
+          username: "user@tenant.onmicrosoft.com",
+          password: "password",
           siteUrl: "https://tenant.sharepoint.com/sites/pub/",
           folder: "Style Library/My Folder",
           checkin: true,
@@ -49,8 +49,4 @@ gulp.task('upload-to-sp', ['minify-js'], function () {
 
 gulp.task('watch-ts-upload-to-sp', function () {
     return gulp.watch("./Scripts/**/*.ts", ['upload-to-sp']);
-});
-
-gulp.task('default', ['upload-to-sp'], function () {
-
 });

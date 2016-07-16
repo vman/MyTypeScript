@@ -27,7 +27,6 @@
     <Content Include="index.html" />
     <Content Include="Output\app.js" />
     <Content Include="Output\app.min.js" />
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\ts\app.ts" />
@@ -43,12 +42,6 @@
     <Content Include="Scripts\typings\globals\jquery\typings.json" />
     <Content Include="Scripts\typings\globals\sharepoint\typings.json" />
     <Content Include="Scripts\typings\globals\microsoft.ajax\typings.json" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
