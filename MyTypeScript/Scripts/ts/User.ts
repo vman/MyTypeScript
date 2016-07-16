@@ -35,6 +35,5 @@ export default class User {
         console.log(this.AccountName);
         console.log(this.DisplayName);
         console.log(this.Email);
-
     }
 }

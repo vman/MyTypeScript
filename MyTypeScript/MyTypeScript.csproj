@@ -31,19 +31,23 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\ts\app.ts" />
     <TypeScriptCompile Include="Scripts\ts\User.ts" />
-    <TypeScriptCompile Include="Scripts\typings\globals\jquery\index.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\globals\microsoft.ajax\index.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\globals\sharepoint\index.d.ts" />
-    <TypeScriptCompile Include="Scripts\typings\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jquery\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\microsoft.ajax\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\sharepoint\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
     <Content Include="tsconfig.json" />
-    <Content Include="Scripts\typings\globals\jquery\typings.json" />
-    <Content Include="Scripts\typings\globals\sharepoint\typings.json" />
-    <Content Include="Scripts\typings\globals\microsoft.ajax\typings.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="typings\globals\jquery\typings.json" />
+    <Content Include="typings\globals\microsoft.ajax\typings.json" />
+    <Content Include="typings\globals\sharepoint\typings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="typings.json" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
