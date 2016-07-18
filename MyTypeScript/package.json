@@ -13,6 +13,8 @@
     "vinyl-source-stream": "1.1.0",
     "tsify": "1.0.1",
     "tslint": "3.13.0",
-    "jquery": "3.1.0"
+    "jquery": "3.1.0",
+    "gulp-sourcemaps": "1.6.0",
+    "vinyl-buffer": "1.0.0"
   }
 }
